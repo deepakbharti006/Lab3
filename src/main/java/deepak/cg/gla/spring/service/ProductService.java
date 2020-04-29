@@ -11,23 +11,23 @@ import deepak.cg.gla.spring.dao.ProductDao;
 import deepak.cg.gla.spring.entity.Product;
 
 @Service
-
-public class ProductService {
+public class ProductService implements ProductServiceInterface {
 	@Autowired
-	ProductDao d;
+	ProductDao productDao;
 
-	@Transactional
-	public List<Product> product() {
-		return (List<Product>) d.findAll();
+	@Override
+	public Product save(Product product) {
+		boolean result = productDao.create(product);
+
+		if (result) {
+			return product;
+		} else
+			return null;
 	}
 
-	@Transactional
-	public boolean addproduct(Product p) {
-		return d.save(p) != null;
-	}
-
-	@Transactional
-	public Product update(int id, Product product) {
-		return d.save(product);
+	@Override
+	public List<Product> reterive() {
+		// TODO Auto-generated method stub
+		return productDao.reterive();
 	}
 }
